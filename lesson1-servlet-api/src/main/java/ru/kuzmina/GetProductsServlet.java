@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/GetProducts")
+@WebServlet(urlPatterns = "/Products")
 public class GetProductsServlet extends HttpServlet {
     private static List<Product> productList = new ArrayList();
 
