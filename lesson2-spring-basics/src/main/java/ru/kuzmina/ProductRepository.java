@@ -29,10 +29,4 @@ public class ProductRepository {
         return products.stream().filter(product -> product.getId() == id).findFirst();
     }
 
-    @Override
-    public String toString() {
-        return "ProductRepository{" +
-                "products=" + products +
-                '}';
-    }
 }

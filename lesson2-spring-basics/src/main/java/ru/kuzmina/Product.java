@@ -25,11 +25,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product {" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                '}' + System.lineSeparator();
+        return "'" + title + "'(" + id + ")" +
+                " -- " + price +
+                "р. ";
     }
 }
 

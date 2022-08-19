@@ -29,6 +29,11 @@ public class Cart {
         product.ifPresent(value -> products.add(value));
     }
 
+    public void dropProductById(long id) {
+        Optional<Product> product = productRepository.getById(id);
+        product.ifPresent(value -> products.remove(value));
+    }
+
     public void clear() {
         products.clear();
     }
@@ -37,8 +42,7 @@ public class Cart {
         return products;
     }
 
-    @Override
-    public String toString() {
-        return products.toString();
+    public int size() {
+        return products.size();
     }
 }
