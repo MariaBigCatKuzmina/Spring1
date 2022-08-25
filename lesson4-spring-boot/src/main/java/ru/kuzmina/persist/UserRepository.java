@@ -41,8 +41,7 @@ public class UserRepository {
         userMap.put(user.getId(), user);
     }
 
-    public void delete(Long id) {
+    public void dropById(Long id) {
         userMap.remove(id);
     }
-
 }

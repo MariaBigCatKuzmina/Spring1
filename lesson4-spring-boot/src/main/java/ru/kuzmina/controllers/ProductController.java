@@ -9,6 +9,7 @@ import ru.kuzmina.persist.Product;
 import ru.kuzmina.persist.ProductRepository;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -44,6 +45,12 @@ public class ProductController {
         productRepository.add(product);
         model.addAttribute("product", product);
         return "product_form";
+    }
+
+    @DeleteMapping("/{id}")
+    public String dropProduct(@PathVariable Long id){
+        productRepository.dropById(id);
+        return "redirect:/product";
     }
 
 }
