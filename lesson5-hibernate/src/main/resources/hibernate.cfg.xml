@@ -10,12 +10,14 @@
         <property name="connection.pool_size">1</property>
         <property name="current_session_context_class">thread</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
-
-        <property name="hibernate.show_sql">true</property>
+<!--        <property name="hibernate.hbm2ddl.auto">create-drop</property>-->
+        <property name="hibernate.show_sql">false</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.format_sql">true</property>
 
         <mapping class="ru.kuzmina.model.User"/>
         <mapping class="ru.kuzmina.model.Product"/>
+        <mapping class="ru.kuzmina.model.Contact"/>
+        <mapping class="ru.kuzmina.model.Order"/>
     </session-factory>
 </hibernate-configuration>
