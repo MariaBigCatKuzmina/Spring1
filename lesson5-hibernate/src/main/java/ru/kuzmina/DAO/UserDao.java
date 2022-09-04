@@ -1,12 +1,14 @@
 package ru.kuzmina.DAO;
 
 import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
 import ru.kuzmina.model.Product;
 import ru.kuzmina.model.User;
 
 import java.util.List;
 import java.util.Optional;
 
+//@Repository
 public class UserDao {
     EntityManager entityManager;
 

@@ -16,13 +16,6 @@ public class Main {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
         EntityManagerUtils entityManagerUtils = context.getBean(EntityManagerUtils.class);
         try {
-            ProductDao productDao = new ProductDao(entityManagerUtils.getEntityManager());
-            System.out.println("JPQL");
-            productDao.findUsersWhoBoughtProduct(1L).ifPresent(System.out::println);
-            System.out.println();
-            System.out.println("Native SQL");
-            productDao.findUsersWhoBoughtProductSQL(1L).ifPresent(System.out::println);
-
             System.out.println();
             OrderService orderService = context.getBean(OrderService.class);
             //вариант из списка заказов
@@ -30,7 +23,11 @@ public class Main {
             orderService.showAllProductsForUser(1L, "product_id");
             //вариант с классом
             System.out.println();
-            System.out.println("вариант с классом");
+            System.out.println("вариант с классом Tuple");
+            orderService.showProductsForUserTulpeTest(1L, "product_id");
+            //вариант с классом
+            System.out.println();
+            System.out.println("вариант с интерфейсом");
             orderService.showProductsForUser(1L, "product_id");
         } finally {
             entityManagerUtils.shutDown();

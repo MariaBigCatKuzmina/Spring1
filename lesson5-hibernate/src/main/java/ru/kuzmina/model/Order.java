@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.kuzmina.DAO.Dto.ProductInfoFromOrdersDto;
 
 import java.util.Date;
 
@@ -25,13 +26,13 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name="price")
+    @Column(name = "price")
     private Double price;
 
-    @Column(name="date")
+    @Column(name = "date")
     private Date date;
 
-    @Column(name="quantity")
+    @Column(name = "quantity")
     private Integer quantity;
 
     public Order(Product product, User user, Double price, Date date) {

@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -24,11 +23,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Наименование не может быть пустым")
+ //   @NotBlank(message = "Наименование не может быть пустым")
     @Column(nullable = false, unique = true)
     private String title;
 
-    @Positive(message = "Стоимость не может быть нулевой")
+//    @Positive(message = "Стоимость не может быть нулевой")
     @Column(nullable = false)
     private Double price;
 
