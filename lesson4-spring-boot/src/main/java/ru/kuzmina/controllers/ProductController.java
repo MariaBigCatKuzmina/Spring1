@@ -5,11 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.kuzmina.persist.Product;
-import ru.kuzmina.persist.ProductRepository;
+import ru.kuzmina.DAO.ProductDao;
+import ru.kuzmina.model.Product;
+import ru.kuzmina.DAO.InMemoryProductDao;
+import ru.kuzmina.repositories.ProductRepository;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -20,13 +21,13 @@ public class ProductController {
 
     @GetMapping
     public String productList(Model model) {
-        model.addAttribute("products", productRepository.getAll());
+        model.addAttribute("products", productRepository.findAll());
         return "product";
     }
 
     @GetMapping("/{id}")
     public String updateProduct(@PathVariable Long id, Model model) {
-        model.addAttribute("product", productRepository.getById(id));
+        model.addAttribute("product", productRepository.findById(id).get());
         return "product_form";
     }
 
@@ -35,21 +36,20 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return "product_form";
         }
-        productRepository.update(product);
-        return "redirect:product";
+        productRepository.save(product);
+        return "redirect:/product";
     }
 
     @GetMapping("/add")
     public String addProduct(Model model) {
         Product product = new Product("", 0.0);
-        productRepository.add(product);
         model.addAttribute("product", product);
         return "product_form";
     }
 
     @DeleteMapping("/{id}")
     public String dropProduct(@PathVariable Long id){
-        productRepository.dropById(id);
+        productRepository.deleteById(id);
         return "redirect:/product";
     }
 

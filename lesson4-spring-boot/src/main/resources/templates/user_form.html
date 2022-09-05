@@ -35,16 +35,23 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <form  th:action="@{/user}" method="post" th:object="${user}">
-                <input th:field="*{id}" type="hidden" id="id" name="id" >
+            <form th:action="@{/user}" method="post" th:object="${user}">
+                <input th:field="*{id}" type="hidden" id="id" name="id">
                 <div class="form-group">
                     <label for="name">Имя пользователя: </label>
                     <input th:field="*{name}" type="text" class="form-control" id="name" name="username"
-                           placeholder="Введите имя пользователя" >
+                           placeholder="Введите имя пользователя">
                     <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+
                     <label for="email">e-mail: </label>
-                    <input th:field="*{email}" type="text" class="form-control" id="email" name="user_email" placeholder="Введите адрес электронной почты" >
+                    <input th:field="*{email}" type="text" class="form-control" id="email" name="user_email"
+                           placeholder="Введите адрес электронной почты">
                     <p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+
+                    <label for="password">Пароль: </label>
+                    <input th:field="*{password}" type="password" class="form-control" id="password"
+                           name="user_password" placeholder="Введите пароль">
+                    <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
