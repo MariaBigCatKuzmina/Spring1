@@ -3,8 +3,18 @@ server:
   servlet:
     context-path: /app
 
+
 spring:
   mvc:
     hiddenmethod:
       filter:
         enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lesson7?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: admin

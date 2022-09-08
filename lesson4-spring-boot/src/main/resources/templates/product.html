@@ -37,6 +37,32 @@
         <div class="col-12">
             <a class="btn btn-primary" th:href="@{/product/add}">Новый продукт</a>
         </div>
+        <div class="col-12 mt-3">
+            <label for="productTitleFilter" class="">Фильтр по названию</label>
+            <form class="form-inline">
+                 <div class="form-group mb-2 mr-2">
+                    <input type="text" class="form-control" id="productTitleFilter" name="productTitleFilter"
+                           placeholder="фильтр по названию" th:value="${param.productTitleFilter}">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Применить</button>
+            </form>
+        </div>
+
+        <div class="col-12 mt-1">
+            <label class = "">Фильтр по цене</label>
+            <form class="form-inline">
+                <div class="form-group mb-2 mr-2">
+                    <label for="productTitleFilter" class = "mr-2">от </label>
+                    <input type="text" class="form-control mr-2" id="priceFilterMin" name="priceFilterMin"
+                           placeholder="минимальная цена" th:value="${param.priceFilterMin}">
+                    <label for="productTitleFilter" class = "mr-2">до</label>
+                    <input type="text" class="form-control mr-2" id="priceFilterMax" name="priceFilterMax"
+                           placeholder="максимальная цена" th:value="${param.priceFilterMax}">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Применить</button>
+            </form>
+        </div>
+
 
         <div class="col-12">
             <table class="table table-bordered my-2">
@@ -58,7 +84,9 @@
                             <i class="fas fa-edit"></i>
                         </a>
                         <form class="d-inline" th:method="delete" th:action="@{'/product/' + ${product.id}}">
-                            <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                            <button class="btn btn-danger">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
