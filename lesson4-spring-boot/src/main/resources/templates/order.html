@@ -33,51 +33,43 @@
 </nav>
 
 <div class="container">
-    <div class="row py-2">
-        <div class="col-12">
-            <a class="btn btn-primary" th:href="@{/user/add}">Новый пользователь</a>
-        </div>
+<!--    <div class="row py-2">-->
+<!--        <div class="col-12">-->
+<!--            <a class="btn btn-primary" th:href="@{/user/add}">Новый пользователь</a>-->
+<!--        </div>-->
 
-        <div class="col-12 mt-3">
-            <form class="form-inline">
-                <div class="form-group mb-2 mr-2">
-                    <label for="usernameFilter" class="sr-only">Фильтр по имени</label>
-                    <input type="text" class="form-control" id="usernameFilter" name="usernameFilter"
-                           placeholder="фильтр по имени" th:value="${param.usernameFilter}">
-                    <label for="emailFilter" class="sr-only">Фильтр по email</label>
-                    <input type="text" class="form-control ml-2" id="emailFilter" name="emailFilter"
-                           placeholder="фильтр по email" th:value="${param.emailFilter}">
-                </div>
-                <button type="submit" class="btn btn-primary mb-2">Применить</button>
-            </form>
-        </div>
+<!--        <div class="col-12 mt-3">-->
+<!--            <form class="form-inline">-->
+<!--                <div class="form-group mb-2 mr-2">-->
+<!--                    <label for="usernameFilter" class="sr-only">Фильтр по имени</label>-->
+<!--                    <input type="text" class="form-control" id="usernameFilter" name="usernameFilter"-->
+<!--                           placeholder="фильтр по имени">-->
+<!--                    <label for="emailFilter" class="sr-only">Фильтр по email</label>-->
+<!--                    <input type="text" class="form-control ml-2" id="emailFilter" name="emailFilter"-->
+<!--                           placeholder="фильтр по email">-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-primary mb-2">Применить</button>-->
+<!--            </form>-->
+<!--        </div>-->
 
         <div class="col-12">
             <table class="table table-bordered my-2">
                 <thead>
                 <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Имя пользователя</th>
-                    <th scope="col">e-mail</th>
-                    <th scope="col">Действия</th>
+                    <th scope="col">Id заказа</th>
+                    <th scope="col">Id продукта</th>
+                    <th scope="col">название продукта</th>
+                    <th scope="col">цена</th>
+                    <th scope="col">количество</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user : ${users}">
-                    <th scope="row" th:text="${user.id}">1</th>
-                    <td th:text="${user.name}">Alex</td>
-                    <td th:text="${user.email}">email</td>
-                    <td>
-                        <a class="btn btn-success" th:href="@{/user/{id}(id=${user.id})}">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <form class="d-inline" th:method="delete" th:action="@{'/user/' + ${user.id}}">
-                            <button class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
-                        </form>
-                        <a class="btn btn-info" th:href="@{/info/userproducts/{id}(id=${user.id})}">
-                            <i class="fas fa-info"></i>
-                        </a>
-                    </td>
+                <tr th:each="order : ${orders}">
+                    <th scope="row" th:text="${order.orderId}">order</th>
+                    <td th:text="${order.productId}">productId</td>
+                    <td th:text="${order.productTitle}">productTitle</td>
+                    <td th:text="${order.price}">price</td>
+                    <td th:text="${order.quantity}">quantity</td>
                 </tr>
                 </tbody>
             </table>

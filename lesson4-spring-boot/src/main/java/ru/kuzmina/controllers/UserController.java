@@ -20,8 +20,8 @@ public class UserController {
     }
 
     @GetMapping
-    public String listPage(@RequestParam String usernameFilter,
-                           @RequestParam String emailFilter,
+    public String listPage(@RequestParam(required = false) String usernameFilter,
+                           @RequestParam(required = false) String emailFilter,
                            Model model) {
 
         usernameFilter = usernameFilter == null || usernameFilter.isBlank() ? null : '%' + usernameFilter.trim() + '%';

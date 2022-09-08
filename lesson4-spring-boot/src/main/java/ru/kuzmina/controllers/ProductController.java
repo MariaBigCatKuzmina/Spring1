@@ -1,13 +1,13 @@
 package ru.kuzmina.controllers;
 
+import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.kuzmina.DAO.ProductDao;
 import ru.kuzmina.model.Product;
-import ru.kuzmina.DAO.InMemoryProductDao;
+import ru.kuzmina.model.QProduct;
 import ru.kuzmina.repositories.ProductRepository;
 
 import javax.validation.Valid;
@@ -20,8 +20,24 @@ public class ProductController {
     private final ProductRepository productRepository;
 
     @GetMapping
-    public String productList(Model model) {
-        model.addAttribute("products", productRepository.findAll());
+    public String productList(@RequestParam(required = false) String productTitleFilter,
+                              @RequestParam(required = false) Integer priceFilterMin,
+                              @RequestParam(required = false) Integer priceFilterMax,
+                              Model model) {
+        BooleanBuilder predicate = new BooleanBuilder();
+
+        QProduct product = QProduct.product;
+
+        if (productTitleFilter != null && !productTitleFilter.isBlank()) {
+            predicate.and(product.title.contains(productTitleFilter.trim()));
+        }
+        if (priceFilterMin != null && priceFilterMin > 0) {
+            predicate.and(product.price.goe(priceFilterMin));
+        }
+        if (priceFilterMax != null && priceFilterMax > 0) {
+            predicate.and(product.price.loe(priceFilterMax));
+        }
+        model.addAttribute("products", productRepository.findAll(predicate));
         return "product";
     }
 
@@ -48,7 +64,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public String dropProduct(@PathVariable Long id){
+    public String dropProduct(@PathVariable Long id) {
         productRepository.deleteById(id);
         return "redirect:/product";
     }
