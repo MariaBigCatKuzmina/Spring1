@@ -1,71 +1,73 @@
 package ru.kuzmina.controllers;
 
-import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.kuzmina.model.Product;
-import ru.kuzmina.model.QProduct;
-import ru.kuzmina.repositories.ProductRepository;
+import ru.kuzmina.exceptions.ApplicationError;
+import ru.kuzmina.model.Dto.ProductDto;
+import ru.kuzmina.services.ProductService;
 
+import javax.management.ServiceNotFoundException;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     @GetMapping
     public String productList(@RequestParam(required = false) String productTitleFilter,
                               @RequestParam(required = false) Integer priceFilterMin,
                               @RequestParam(required = false) Integer priceFilterMax,
+                              @RequestParam(required = false) Optional<Integer> page,
+                              @RequestParam(required = false) Optional<Integer> size,
+                              @RequestParam(required = false) Optional<String> sortField,
                               Model model) {
-        BooleanBuilder predicate = new BooleanBuilder();
+        int curPage = page.orElse(1) - 1;
+        int curSize = size.orElse(3);
+        String sortFieldName = sortField.orElse("id");
 
-        QProduct product = QProduct.product;
-
-        if (productTitleFilter != null && !productTitleFilter.isBlank()) {
-            predicate.and(product.title.contains(productTitleFilter.trim()));
-        }
-        if (priceFilterMin != null && priceFilterMin > 0) {
-            predicate.and(product.price.goe(priceFilterMin));
-        }
-        if (priceFilterMax != null && priceFilterMax > 0) {
-            predicate.and(product.price.loe(priceFilterMax));
-        }
-        model.addAttribute("products", productRepository.findAll(predicate));
+    model.addAttribute("products", productService.findAll(productTitleFilter, priceFilterMin,
+                priceFilterMax, curPage, curSize, sortFieldName));
         return "product";
     }
 
     @GetMapping("/{id}")
     public String updateProduct(@PathVariable Long id, Model model) {
-        model.addAttribute("product", productRepository.findById(id).get());
-        return "product_form";
+        Optional<ProductDto> product =  productService.findById(id);
+//        ProductDto product = productService.findById(id).orElseThrow(() -> new ServiceNotFoundException("Product not found, id:" + id));
+        if (product.isPresent()) {
+            model.addAttribute("product", product);
+            return "product_form";
+        }
+        model.addAttribute("error", new ApplicationError(404, "Product not found"));
+        return "error";
     }
 
     @PostMapping
-    public String saveProduct(@Valid Product product, BindingResult bindingResult) {
+    public String saveProduct(@Valid ProductDto product, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "product_form";
         }
-        productRepository.save(product);
+        productService.save(product);
         return "redirect:/product";
     }
 
     @GetMapping("/add")
     public String addProduct(Model model) {
-        Product product = new Product("", 0.0);
+        ProductDto product = new ProductDto("", 0.0);
         model.addAttribute("product", product);
         return "product_form";
     }
 
     @DeleteMapping("/{id}")
     public String dropProduct(@PathVariable Long id) {
-        productRepository.deleteById(id);
+        productService.deleteById(id);
         return "redirect:/product";
     }
 

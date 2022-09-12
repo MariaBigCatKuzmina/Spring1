@@ -21,16 +21,16 @@ public class User {
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
- //   @NotBlank(message = "Имя не может быть пустым")
+    @NotBlank(message = "Имя не может быть пустым")
     private String name;
 
     @Column(name = "email", nullable = false, unique = true)
-//    @NotBlank
-//    @Email
+    @NotBlank
+    @Email
     private String email;
 
     @Column(nullable = false, length = 1024)
-//    @NotBlank
+    @NotBlank
     private String password;
 
     @OneToMany(mappedBy = "user")
@@ -41,4 +41,9 @@ public class User {
         this.email = "";
     }
 
+    public User(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 }

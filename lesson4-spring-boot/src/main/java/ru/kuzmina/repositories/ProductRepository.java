@@ -7,5 +7,7 @@ import ru.kuzmina.model.Product;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
+
     List<Product> findAllByTitleLike(String titleFilter);
+
 }

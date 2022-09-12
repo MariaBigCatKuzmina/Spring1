@@ -43,11 +43,11 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Заказ №" + id +
-                ": " + product.getTitle() +
-                ", user=" + user.getName() +
-                ", price=" + price +
-                ", date=" + date +
+        return "Заказ №" + this.id +
+                ": " + this.product.getTitle() +
+                ", user=" + this.user.getName() +
+                ", price=" + this.price +
+                ", date=" + this.date +
                 '}';
     }
 }

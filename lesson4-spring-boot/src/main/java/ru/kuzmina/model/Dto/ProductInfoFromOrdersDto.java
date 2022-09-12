@@ -1,4 +1,4 @@
-package ru.kuzmina.DAO.Dto;
+package ru.kuzmina.model.Dto;
 
 public interface ProductInfoFromOrdersDto {
 
