@@ -2,8 +2,6 @@ server:
   port: 8189
   servlet:
     context-path: /app
-
-
 spring:
   mvc:
     hiddenmethod:

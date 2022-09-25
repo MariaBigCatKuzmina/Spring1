@@ -19,11 +19,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @NotBlank(message = "Наименование не может быть пустым")
+    @NotBlank(message = "Наименование не может быть пустым")
 
     @Column(name = "title", nullable = false)
     private String title;
-//    @Positive(message = "Стоимость не может быть нулевой")
+    @Positive(message = "Стоимость не может быть нулевой")
 
     @Column(name = "price", nullable = false)
     private Double price;
@@ -32,6 +32,7 @@ public class Product {
         this.title = title;
         this.price = price;
     }
+
     @OneToMany(mappedBy = "product")
     private List<Order> orders;
 

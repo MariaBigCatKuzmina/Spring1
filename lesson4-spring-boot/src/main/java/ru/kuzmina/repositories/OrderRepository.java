@@ -2,7 +2,7 @@ package ru.kuzmina.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import ru.kuzmina.DAO.Dto.ProductInfoFromOrdersDto;
+import ru.kuzmina.model.Dto.ProductInfoFromOrdersDto;
 import ru.kuzmina.model.Order;
 
 import java.util.List;
