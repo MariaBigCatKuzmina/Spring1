@@ -24,7 +24,7 @@ public class ProductService {
         this.mapper = mapper;
     }
 
-    public Page<Product> findAll(String productTitleFilter,
+    public Page<ProductDto> findAll(String productTitleFilter,
                                  Integer priceFilterMin,
                                  Integer priceFilterMax,
                                  int page, int size, String sortField) {
@@ -44,7 +44,7 @@ public class ProductService {
             predicate.and(product.price.loe(priceFilterMax));
         }
 
-        return productRepository.findAll(predicate, PageRequest.of(page, size, Sort.by(sortField)));
+        return productRepository.findAll(predicate, PageRequest.of(page, size, Sort.by(sortField))).map(mapper::map);
     }
 
     public Optional<ProductDto> findById(Long id) {
@@ -54,6 +54,8 @@ public class ProductService {
     public ProductDto save(ProductDto product) {
         return mapper.map(productRepository.save(mapper.map(product)));
     }
+
+
 
     public void deleteById(Long id) {
         productRepository.deleteById(id);

@@ -126,6 +126,7 @@
                             <span th:if="${num == products.number + 1}" class="sr-only">(current)</span>
                         </a>
                     </li>
+                    <!--                           sortField=${param.sortField.isEmpty()} ? 'id' : ${param.sortField}-->
 
                     <li class="page-item" th:classappend="${products.isLast()} ? 'disabled'">
                         <a class="page-link"
