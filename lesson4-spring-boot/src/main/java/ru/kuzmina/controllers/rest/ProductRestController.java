@@ -1,15 +1,14 @@
 package ru.kuzmina.controllers.rest;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kuzmina.exceptions.ResourceNotFoundException;
 import ru.kuzmina.model.Dto.ProductDto;
 import ru.kuzmina.services.ProductService;
 
-import java.util.Optional;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/products")
 @AllArgsConstructor
@@ -20,23 +19,19 @@ public class ProductRestController {
     public Page<ProductDto> productList(@RequestParam(required = false) String productTitleFilter,
                                         @RequestParam(required = false) Integer priceFilterMin,
                                         @RequestParam(required = false) Integer priceFilterMax,
-                                        @RequestParam(required = false) Optional<Integer> page,
-                                        @RequestParam(required = false) Optional<Integer> size,
-                                        @RequestParam(required = false) Optional<String> sortField,
-                                        Model model) {
-        int curPage = page.orElse(1) - 1;
-        int curSize = size.orElse(3);
-        String sortFieldName = sortField.orElse("id");
+                                        @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(required = false, defaultValue = "5") int size,
+                                        @RequestParam(defaultValue = "id") String sortField) {
 
-        sortFieldName = sortFieldName.isBlank() ? "id" : sortFieldName;
+        String sortFieldName = sortField.isBlank() ? "id" : sortField;
 
         return productService.findAll(productTitleFilter, priceFilterMin,
-                priceFilterMax, curPage, curSize, sortFieldName);
+                priceFilterMax, page, size, sortFieldName);
     }
 
-
-    @GetMapping("/{id}")
-    public ProductDto getProduct(@PathVariable Long id, Model model) {
+    @GetMapping("/{id}/get")
+    public ProductDto getProduct(@PathVariable("id") Long id) {
+        log.info("get product " + id);
         return productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product not found, id:" + id));
     }
 
@@ -50,4 +45,8 @@ public class ProductRestController {
         productService.deleteById(id);
     }
 
+    @PutMapping
+    public ProductDto updateProduct(@RequestBody ProductDto productDto) {
+        return productService.save(productDto);
+    }
 }
