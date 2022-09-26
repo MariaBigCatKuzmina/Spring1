@@ -35,7 +35,15 @@ public class ProductRepository {
     }
 
     public Optional<Product> getById(long id) {
-        return products.values().stream().filter(product -> product.getId() == id).findFirst();
+//        return products.values().
+//                stream().
+//                filter(product -> product.getId() == id).
+//                findFirst().
+        return Optional.ofNullable(products.values().
+                stream().
+                filter(product -> product.getId() == id).
+                findFirst().
+                orElseThrow(IndexOutOfBoundsException::new));
     }
 
     public void update(Product product){

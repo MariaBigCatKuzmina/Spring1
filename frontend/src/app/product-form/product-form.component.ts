@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class ProductFormComponent implements OnInit {
 
   product = new Product(null, "", 0);
-  error = false;
+  isError = false;
   errorMessage = "";
 
   constructor(private productService: ProductServiceService,
@@ -26,8 +26,8 @@ export class ProductFormComponent implements OnInit {
             this.product = result;
           },
           err => {
-            this.error = true;
-            this.errorMessage = err.error;
+            this.isError = true;
+            this.errorMessage = err.error.message;
           })
     })
   }
@@ -38,8 +38,8 @@ export class ProductFormComponent implements OnInit {
         console.log(res);
         this.router.navigateByUrl('/products')
       }, err => {
-        this.error = true;
-        this.errorMessage = err;
+        this.isError = true;
+        this.errorMessage = err.error.message;
       })
   }
 }
