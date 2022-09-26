@@ -1,14 +1,8 @@
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.kuzmina.DAO.ProductDao;
 import ru.kuzmina.EntityManagerUtils;
 import ru.kuzmina.Services.OrderService;
 import ru.kuzmina.config.ApplicationConfiguration;
-import ru.kuzmina.model.Contact;
-import ru.kuzmina.model.ContactType;
-import ru.kuzmina.model.User;
-
-import java.util.Arrays;
 
 
 public class Main {

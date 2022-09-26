@@ -1,18 +1,19 @@
 package ru.kuzmina.services;
 
 import com.querydsl.core.BooleanBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.kuzmina.model.Dto.ProductDto;
-import ru.kuzmina.model.Product;
 import ru.kuzmina.model.QProduct;
 import ru.kuzmina.model.mapper.ProductDtoMapper;
 import ru.kuzmina.repositories.ProductRepository;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class ProductService {
 
@@ -25,14 +26,13 @@ public class ProductService {
     }
 
     public Page<ProductDto> findAll(String productTitleFilter,
-                                 Integer priceFilterMin,
-                                 Integer priceFilterMax,
-                                 int page, int size, String sortField) {
+                                    Integer priceFilterMin,
+                                    Integer priceFilterMax,
+                                    int page, int size, String sortField) {
 
         BooleanBuilder predicate = new BooleanBuilder();
 
         QProduct product = QProduct.product;
-
 
         if (productTitleFilter != null && !productTitleFilter.isBlank()) {
             predicate.and(product.title.contains(productTitleFilter.trim()));
@@ -54,8 +54,6 @@ public class ProductService {
     public ProductDto save(ProductDto product) {
         return mapper.map(productRepository.save(mapper.map(product)));
     }
-
-
 
     public void deleteById(Long id) {
         productRepository.deleteById(id);

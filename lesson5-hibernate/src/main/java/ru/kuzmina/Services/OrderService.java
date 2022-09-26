@@ -33,15 +33,16 @@ public class OrderService {
     //снова не получается ни через интерфейс ни через класс реализующий этот интерфейс
     public void showProductsForUser(Long userId, String sortCondition) {
         System.out.println("Список продуктов для пользователя: " + userId);
-        orderDao.findAllProductsBoughtByUser(userId, sortCondition).stream()
+        orderDao.findAllProductsBoughtByUser(userId, sortCondition)
+                .stream()
                 .map(dto -> {
-                    ProductInfoFromOrdersDto entity = new ProductInfoFromOrdersDto();
-                    entity.setOrderId(dto.getOrderId());
-                    entity.setProductId(dto.getProductId());
-                    entity.setProductTitle(dto.getProductTitle());
-                    entity.setPrice(dto.getPrice());
-                    entity.setQuantity(dto.getQuantity());
-                    return entity;
+                        ProductInfoFromOrdersDtoEntity entity = new ProductInfoFromOrdersDtoEntity();
+                        entity.setOrderId(dto.getOrderId());
+                        entity.setProductId(dto.getProductId());
+                        entity.setProductTitle(dto.getProductTitle());
+                        entity.setPrice(dto.getPrice());
+                        entity.setQuantity(dto.getQuantity());
+                        return entity;
                 })
                 .forEach(System.out::println);
 

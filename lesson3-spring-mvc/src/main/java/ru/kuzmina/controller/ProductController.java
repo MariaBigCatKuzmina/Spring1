@@ -24,7 +24,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public String updateProduct(@RequestParam("id") Long id, Model model){
+    public String updateProduct(@RequestParam Long id, Model model){
         model.addAttribute("product", productRepository.getById(id));
         return "product_form";
     }

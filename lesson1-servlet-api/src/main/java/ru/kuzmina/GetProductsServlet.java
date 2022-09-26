@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/Products")
+@WebServlet(urlPatterns = "/products")
 public class GetProductsServlet extends HttpServlet {
-    private static List<Product> productList = new ArrayList();
+    private static final List<Product> productList = new ArrayList();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
