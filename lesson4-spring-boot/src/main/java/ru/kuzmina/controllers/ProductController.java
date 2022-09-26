@@ -9,7 +9,6 @@ import ru.kuzmina.exceptions.ApplicationError;
 import ru.kuzmina.model.Dto.ProductDto;
 import ru.kuzmina.services.ProductService;
 
-import javax.management.ServiceNotFoundException;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -32,14 +31,16 @@ public class ProductController {
         int curSize = size.orElse(3);
         String sortFieldName = sortField.orElse("id");
 
-    model.addAttribute("products", productService.findAll(productTitleFilter, priceFilterMin,
+        sortFieldName = sortFieldName.isBlank() ? "id" : sortFieldName;
+
+        model.addAttribute("products", productService.findAll(productTitleFilter, priceFilterMin,
                 priceFilterMax, curPage, curSize, sortFieldName));
         return "product";
     }
 
     @GetMapping("/{id}")
     public String updateProduct(@PathVariable Long id, Model model) {
-        Optional<ProductDto> product =  productService.findById(id);
+        Optional<ProductDto> product = productService.findById(id);
 //        ProductDto product = productService.findById(id).orElseThrow(() -> new ServiceNotFoundException("Product not found, id:" + id));
         if (product.isPresent()) {
             model.addAttribute("product", product);
