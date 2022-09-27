@@ -3,6 +3,7 @@ package ru.kuzmina.model.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.NullValueCheckStrategy;
+
 import ru.kuzmina.model.Dto.ProductDto;
 import ru.kuzmina.model.Product;
 
