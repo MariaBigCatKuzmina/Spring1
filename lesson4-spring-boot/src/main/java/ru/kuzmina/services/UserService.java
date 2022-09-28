@@ -19,7 +19,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDtoMapper mapper;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserDtoMapper mapper) {
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       UserDtoMapper mapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.mapper = mapper;
@@ -38,6 +40,7 @@ public class UserService {
     }
 
     public UserDto save(UserDto userDto) {
+//        User user = mapper.map(userDto, passwordEncoder);
         User user = mapper.map(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return mapper.map(user);
