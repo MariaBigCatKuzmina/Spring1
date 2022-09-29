@@ -1,50 +1,27 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <title>EShop application</title>
+<head th:replace="fragments/head.html::head">
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">EShop</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/user}">Список пользователей</a>
-            </li>
-        </ul>
-    </div>
+<nav th:replace="fragments/head.html::navigation">
 </nav>
 
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <a class="btn btn-primary" th:href="@{/product/add}">Новый продукт</a>
+            <a class="btn btn-outline-dark" th:href="@{/product/add}">Новый продукт</a>
         </div>
         <div class="col-12 mt-3">
             <label for="productTitleFilter" class="">Фильтр по названию</label>
             <form class="form-inline">
                 <div class="form-group mb-2 mr-2">
-                    <input type="text" class="form-control" id="productTitleFilter" name="productTitleFilter"
+                    <input type="text" class="form-control " id="productTitleFilter" name="productTitleFilter"
                            placeholder="фильтр по названию" th:value="${param.productTitleFilter}">
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Применить</button>
+                <button type="submit" class="btn btn-outline-dark mb-2">Применить</button>
             </form>
         </div>
 
@@ -59,7 +36,7 @@
                     <input type="text" class="form-control mr-2" id="priceFilterMax" name="priceFilterMax"
                            placeholder="максимальная цена" th:value="${param.priceFilterMax}">
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Применить</button>
+                <button type="submit" class="btn btn-outline-dark mb-2">Применить</button>
             </form>
         </div>
 

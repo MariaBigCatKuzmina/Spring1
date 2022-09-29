@@ -1,6 +1,6 @@
 USE lesson7;
 
-INSERT INTO users (name, email, password)
+INSERT INTO users (username, email, password)
 VALUES ('user1', 'u1@e.ru', 'pass1_!U1'),
        ('user2', 'u2@e.ru', 'pass2_!U2'),
        ('user3', 'u3@e.ru', 'pass3_!U3'),

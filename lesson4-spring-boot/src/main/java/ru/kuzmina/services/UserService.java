@@ -43,7 +43,7 @@ public class UserService {
 //        User user = mapper.map(userDto, passwordEncoder);
         User user = mapper.map(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return mapper.map(user);
+        return mapper.map(userRepository.save(user));
     }
 
     public void deleteById(Long id) {
@@ -51,9 +51,9 @@ public class UserService {
     }
 
     public org.springframework.security.core.userdetails.User findUserByName(String username) {
-       return userRepository.findUserByName(username)
+       return userRepository.findUserByUsername(username)
                .map(user -> new org.springframework.security.core.userdetails.User(
-                       user.getName(),
+                       user.getUsername(),
                        user.getPassword(),
                        Collections.singletonList(new SimpleGrantedAuthority("ADMIN"))
                )).orElseThrow(() -> new UsernameNotFoundException(username));

@@ -45,7 +45,7 @@ public class Order {
     public String toString() {
         return "Заказ №" + this.id +
                 ": " + this.product.getTitle() +
-                ", user=" + this.user.getName() +
+                ", user=" + this.user.getUsername() +
                 ", price=" + this.price +
                 ", date=" + this.date +
                 '}';

@@ -20,9 +20,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     @NotBlank(message = "Имя не может быть пустым")
-    private String name;
+    private String username;
 
     @Column(name = "email", nullable = false, unique = true)
     @NotBlank
@@ -36,13 +36,16 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
-    public User(String name) {
-        this.name = name;
+    @OneToMany(mappedBy = "user")
+    private List<Authorities> authorities;
+
+    public User(String username) {
+        this.username = username;
         this.email = "";
     }
 
-    public User(String name, String email, String password) {
-        this.name = name;
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }
