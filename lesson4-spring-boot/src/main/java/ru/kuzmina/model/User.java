@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -36,8 +37,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "user")
-    private List<Authorities> authorities;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
     public User(String username) {
         this.username = username;

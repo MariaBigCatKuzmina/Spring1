@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html::head">
+</head>
+
+<body>
+
+<nav th:replace="fragments/head.html :: navigation">
+</nav>
+    <div class = "container">
+        <h3>Access denied for <span th:text = "${#authentication.name}"></span> </h3>
+    </div>
+</body>
+</html>

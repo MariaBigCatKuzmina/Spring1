@@ -1,7 +1,12 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="fragments/head.html::head">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
+
 </head>
 
 <body>
@@ -12,7 +17,7 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <a class="btn btn-outline-dark" th:href="@{/product/add}">Новый продукт</a>
+            <a class="btn btn-outline-dark" sec:authorize="hasAnyRole('SUPER_ADMIN','ADMIN')" th:href="@{/product/add}">Новый продукт</a>
         </div>
         <div class="col-12 mt-3">
             <label for="productTitleFilter" class="">Фильтр по названию</label>
@@ -39,7 +44,6 @@
                 <button type="submit" class="btn btn-outline-dark mb-2">Применить</button>
             </form>
         </div>
-
 
         <div class="col-12">
             <table class="table table-bordered my-2">
@@ -73,12 +77,17 @@
                     <td th:text="${product.title}">title</td>
                     <td th:text="${product.price}">price</td>
                     <td>
-                        <a class="btn btn-success" th:href="@{'/product/' + ${product.id}}">
+                        <a class="btn btn-outline-dark" sec:authorize="hasAnyRole('ADMIN','SUPER_ADMIN')" th:href="@{'/product/' + ${product.id}}">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form class="d-inline" th:method="delete" th:action="@{'/product/' + ${product.id}}">
-                            <button class="btn btn-danger">
+                        <form class="d-inline" sec:authorize="hasAnyRole('ADMIN','SUPER_ADMIN')"  th:method="delete" th:action="@{'/product/' + ${product.id}}">
+                            <button class="btn btn-outline-dark ">
                                 <i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                        <form class="d-inline"  th:method="post" th:action="@{'/product/add_to_cart' + ${product.id}}">
+                            <button class="btn btn-outline-dark">
+                                <i class="far fa-cart-plus"></i>
                             </button>
                         </form>
                     </td>
@@ -90,7 +99,7 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-sm-start">
                     <li class="page-item" th:classappend="${products.isFirst()} ? 'disabled'">
-                        <a class="page-link"
+                        <a class="page-link border-dark badge-light"
                            th:href="@{/product(page=${products.number}, size=${products.size}, sortField=${param.sortField})}">
                             Previous
                         </a>
@@ -98,7 +107,7 @@
 
                     <li class="page-item" th:each="num : ${#numbers.sequence(1, products.totalPages)}"
                         th:classappend="${num == products.number + 1} ? 'active'">
-                        <a class="page-link"
+                        <a class="page-link border-dark badge-light"
                            th:href="@{/product(page=${num}, size=${products.size}, sortField=${param.sortField})}">[[${num}]]
                             <span th:if="${num == products.number + 1}" class="sr-only">(current)</span>
                         </a>
@@ -106,7 +115,7 @@
                     <!--                           sortField=${param.sortField.isEmpty()} ? 'id' : ${param.sortField}-->
 
                     <li class="page-item" th:classappend="${products.isLast()} ? 'disabled'">
-                        <a class="page-link"
+                        <a class="page-link border-dark badge-light "
                            th:href="@{/product(page=${products.number + 2}, size=${products.size}, sortField=${param.sortField})}">
                             Next
                         </a>

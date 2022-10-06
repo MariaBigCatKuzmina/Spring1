@@ -20,5 +20,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             WHERE o.user_id = :userId
             ORDER BY :sortCondition
             """, nativeQuery = true)
-    List<ProductInfoFromOrdersDto> getAllBoughtProductsForUser(Long userId, String sortCondition);
+    List<ProductInfoFromOrdersDto> allBoughtProductsForUser(Long userId, String sortCondition);
 }

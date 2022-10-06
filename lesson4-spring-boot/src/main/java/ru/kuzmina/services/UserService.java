@@ -12,6 +12,7 @@ import ru.kuzmina.repositories.UserRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -34,7 +35,8 @@ public class UserService {
     public List<UserDto> findUsersByFilter(String usernameFilter, String emailFilter) {
         usernameFilter = usernameFilter == null || usernameFilter.isBlank() ? null : '%' + usernameFilter.trim() + '%';
         emailFilter = emailFilter == null || emailFilter.isBlank() ? null : '%' + emailFilter.trim() + '%';
-        return userRepository.userByUsernameAndEmail(usernameFilter, emailFilter).stream()
+        return userRepository.getUserByUsernameAndEmail(usernameFilter, emailFilter)
+                .stream()
                 .map(mapper::map)
                 .toList();
     }
@@ -55,7 +57,9 @@ public class UserService {
                .map(user -> new org.springframework.security.core.userdetails.User(
                        user.getUsername(),
                        user.getPassword(),
-                       Collections.singletonList(new SimpleGrantedAuthority("ADMIN"))
+                       user.getRoles().stream()
+                               .map(role -> new SimpleGrantedAuthority(role.getName()))
+                               .collect(Collectors.toList())
                )).orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }

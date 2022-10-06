@@ -19,7 +19,7 @@ public class InfoController {
 
     @GetMapping("/userproducts/{id}")
     public String getAllBoughtProductsForUser(@PathVariable(name = "id") Long userId, Model model) {
-        model.addAttribute("orders",orderRepository.getAllBoughtProductsForUser(userId, "o.product_id"));
+        model.addAttribute("orders",orderRepository.allBoughtProductsForUser(userId, "o.product_id"));
         return "order.html";
     }
 }
