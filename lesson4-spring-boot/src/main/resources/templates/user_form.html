@@ -1,35 +1,12 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <title>EShop application</title>
+<head th:replace="fragments/head.html::head">
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">EShop</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/user}">Список пользователей</a>
-            </li>
-        </ul>
-    </div>
+<nav th:replace="fragments/head.html::navigation">
 </nav>
 
 <div class="container">
@@ -39,9 +16,9 @@
                 <input th:field="*{id}" type="hidden" id="id" name="id">
                 <div class="form-group">
                     <label for="name">Имя пользователя: </label>
-                    <input th:field="*{name}" type="text" class="form-control" id="name" name="username"
+                    <input th:field="*{username}" type="text" class="form-control" id="name" name="username"
                            placeholder="Введите имя пользователя">
-                    <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                    <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
 
                     <label for="email">e-mail: </label>
                     <input th:field="*{email}" type="text" class="form-control" id="email" name="user_email"

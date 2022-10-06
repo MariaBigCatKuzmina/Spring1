@@ -3,11 +3,11 @@ create table IF NOT EXISTS users
 (
     id    bigint auto_increment
         primary key,
-    name  varchar(255) not null,
+    username  varchar(255) not null,
     email varchar(255) not null,
         password varchar (1024) not null,
     constraint UK_5f7entu3leiopi9401fr7mxav
-        unique (name),
+        unique (username),
     constraint UK_6dotkott2kjsp8vw4d0m25fb7
         unique (email)
 );
