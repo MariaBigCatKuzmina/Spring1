@@ -29,6 +29,17 @@
                     <input th:field="*{password}" type="password" class="form-control" id="password"
                            name="user_password" placeholder="Введите пароль">
                     <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+
+                    <label for="roles">Роли: </label>
+                    <select th:field="*{roles}" class="form-control" id="roles" required multiple>
+                        <option th:each="role : ${roles}"
+                                th:text="${role.getName()}"
+                                th:value="${role.getId()}"
+                                th:selected="${user.getRoles()?.contains(role)}"
+                                >
+                        </option>
+                    </select>
+
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

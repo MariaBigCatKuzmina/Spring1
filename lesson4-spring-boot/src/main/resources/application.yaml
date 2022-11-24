@@ -16,3 +16,8 @@ spring:
     url: jdbc:mysql://localhost:3306/lesson7?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: admin
+
+logging:
+  level:
+    ru.kuzmina.controller : info
+    org.springframework.security: DEBUG

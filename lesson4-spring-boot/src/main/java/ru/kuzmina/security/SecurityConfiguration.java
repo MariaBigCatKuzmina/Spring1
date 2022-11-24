@@ -3,11 +3,19 @@ package ru.kuzmina.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration {
 
     @Autowired
@@ -24,6 +32,32 @@ public class SecurityConfiguration {
                 .roles("GUEST");
 
         authBuilder.userDetailsService(userDetailsService);
+    }
+
+    @Configuration
+    public static class UiWebSecurerConfigurationAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests()
+                    .antMatchers("/**/*.css", "/**/*.js").permitAll()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/user/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                    .and()
+                    .formLogin()
+                    .successHandler((request, response, authentication) -> {
+                        Set<String> auths = authentication.getAuthorities().stream()
+                                .map(GrantedAuthority::getAuthority)
+                                .collect(Collectors.toSet());
+                        if (auths.contains("ROLE_ADMIN") || auths.contains("ROLE_SUPER_ADMIN")){
+                            response.sendRedirect("/app/user");
+                        } else {
+                            response.sendRedirect("/app");
+                        }
+                    })
+                    .and()
+                    .exceptionHandling()
+                    .accessDeniedPage("/access_denied");
+        }
     }
 
 }

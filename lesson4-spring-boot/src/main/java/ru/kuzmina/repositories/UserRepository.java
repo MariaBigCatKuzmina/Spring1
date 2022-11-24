@@ -12,11 +12,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = """
             SELECT u.*
             FROM users u
-            WHERE (:usernameFilter IS NULL OR u.username like :usernameFilter)
-            AND (:emailFilter IS NULL OR u.email like :emailFilter)
+            WHERE (:usernameFilter IS NULL OR u.username LIKE :usernameFilter)
+            AND (:emailFilter IS NULL OR u.email LIKE :emailFilter)
             """, nativeQuery = true)
-    List<User> userByUsernameAndEmail(String usernameFilter, String emailFilter);
-
+    List<User> getUserByUsernameAndEmail(String usernameFilter, String emailFilter);
+//    List<User> findUserByUsernameAndEmail(String usernameFilter, String emailFilter);
 
     Optional<User> findUserByUsername(String username);
 }
